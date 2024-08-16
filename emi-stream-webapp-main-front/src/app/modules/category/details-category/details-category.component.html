@@ -1,0 +1,215 @@
+<div class="flex flex-col w-full">
+    <div class="h-24 bg-blue-900"></div>
+    <!-- View mode -->
+    <ng-container *ngIf="!editMode">
+        <!-- Header -->
+        <div class="flex items-center justify-between bg-blue-900 w-full h-16 p-6 pt-0 pb-0 sm:px-12 dark:bg-accent-700">
+            <div class="flex items-center justify-center">
+                <span class="font-medium text-white text-2xl truncate">Detalles de la categoria</span>
+            </div>
+            <div class="flex items-center">
+                <!-- More menu -->
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu">
+                    <mat-icon class="text-white">more_vert</mat-icon>
+                </button>
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item (click)="toggleEditMode(true)">
+                        <mat-icon>edit</mat-icon>
+                        <span class="ml-2">Editar</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="deleteCategory()">
+                        <mat-icon color="warn">delete_forever</mat-icon>
+                        <span class="text-red-500">Eliminar</span>
+                    </button>
+                </mat-menu>
+
+                <!-- Close button -->
+                <button mat-icon-button matTooltip="Cerrar" [routerLink]="['../']">
+                    <mat-icon class="text-white">clear</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+                    <div class="w-full max-w-3xl">
+                        <!-- Title -->
+                        <div class="flex flex-row items-center justify-center">
+                            <mat-icon class="text-2xl">{{category.icon}}</mat-icon>
+                            <div class="ml-4 mt-3 text-4xl font-bold truncate text-center p-3">
+                                {{category.title}}
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2">
+                            <!-- Title -->
+                            <div class="flex sm:items-center mt-8">
+                                <mat-icon class="icon-size-5">style</mat-icon>
+                                <div class="ml-6 leading-6">Titulo de la categoria:</div>
+                            </div>
+                            <div class="flex sm:items-center mt-8">
+                                <div class="font-semibold text-secondary">{{category?.title}}</div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="flex sm:items-center mt-8">
+                                <mat-icon class="icon-size-5">notes</mat-icon>
+                                <div class="ml-6 leading-6">Descripcion de la categoria:</div>
+                            </div>
+
+                            <div class="mt-8">
+                                <span class="font-semibold text-secondary">{{category?.description}}</span> 
+                            </div>
+
+                            <div class="flex sm:items-center mt-8">
+                                <mat-icon class="icon-size-5">notes</mat-icon>
+                                <div class="ml-6 leading-6">Estado de la categoria:</div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="flex items-center px-4 mt-6 leading-9 rounded-full cursor-pointer w-1/2" [ngClass]="{'text-green-800 bg-green-200 dark:text-green-100 dark:bg-green-500': (category.status|lowercase) === 'active',
+                                                'text-red-800 bg-red-200 dark:text-red-100 dark:bg-red-500': (category.status|lowercase) === 'inactive'}">
+
+                                <!-- Activo -->
+                                <ng-container *ngIf="(category.status|lowercase) === 'active'">
+                                    <mat-icon class="icon-size-5 text-current">check</mat-icon>
+                                    <span class="ml-2 mr-1 text-md font-medium">Activo</span>
+                                </ng-container>
+
+                                <!-- Inactivo -->
+                                <ng-container *ngIf="(category.status|lowercase) === 'inactive'">
+                                    <mat-icon class="icon-size-4 text-current">clear</mat-icon>
+                                    <span class="ml-2 mr-1 text-md font-medium">Inactivo</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="editMode">
+        <!-- Header -->
+        <div class="flex items-center justify-between bg-blue-900 w-full h-16 px-8 sm:px-12 dark:bg-accent-700">
+            <div class="flex items-center justify-center">
+                <span class="font-medium text-white text-2xl">
+                    {{ category.id === ''? 'Registrar': 'Editar'}} Categoria
+                </span>
+            </div>
+            <div class="flex items-center">
+                <!-- Close button -->
+                <button mat-icon-button matTooltip="Cerrar" [routerLink]="['../']">
+                    <mat-icon class="text-white">clear</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 pb-0 sm:p-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <form [formGroup]="categoryForm">
+                    <div class="flex flex-wrap justify-between">
+                        <!--Title-->
+                        <div class="mt-8 flex-auto" [ngClass]="{'mr-8': category.id}">
+                            <mat-form-field class="w-full ">
+                                <mat-label>Nombre de la categoria</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 ">style</mat-icon>
+                                <input matInput [formControlName]="'title'" placeholder="Nombre de la categoria" [spellcheck]="false" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="categoryForm.get('title').errors">
+                                    {{matcher.getErrorMessage('title', categoryForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mt-4">
+                        <mat-form-field class="w-full">
+                            <mat-label>Decripcion</mat-label>
+                            <mat-icon matPrefix class="hidden sm:flex icon-size-5 ">notes</mat-icon>
+                            <textarea matInput [formControlName]="'description'" placeholder="Descripcion" [spellcheck]="false" [errorStateMatcher]="matcher" rows="5"></textarea>
+                            <mat-error *ngIf="categoryForm.get('description').errors">
+                                {{matcher.getErrorMessage('description', categoryForm)}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <mat-form-field>
+                            <mat-label>Icono</mat-label>
+                            <mat-icon matPrefix class="hidden sm:flex icon-size-5">{{categoryForm.get('icon').value}}</mat-icon>
+                            <mat-select-trigger>
+                                <span class="sm:mx-0.5 mt-1 text-lg text-default">{{iconSelector.value}}</span>
+                            </mat-select-trigger>
+                            <mat-select [formControlName]="'icon'" #iconSelector>
+                                <ng-container *ngFor="let icon of icons; trackBy: trackByFn">
+                                    <mat-option value="{{icon}}" class="text-center">
+                                        <mat-icon class="text-current" matListItemIcon>{{icon}}</mat-icon>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                            <mat-error *ngIf="categoryForm.get('icon').errors">
+                                {{matcher.getErrorMessage('icon', categoryForm)}}
+                            </mat-error>
+                        </mat-form-field>
+                        <!-- Status -->
+                        <div *ngIf="category.id">
+                            <div class="flex items-center px-4 leading-9 rounded-full cursor-pointer h-12 w-full md:w-2/3 mx-auto" [ngClass]="{'text-green-800 bg-green-200 dark:text-green-100 dark:bg-green-500': (category.status|lowercase) === 'active',
+                                                'text-red-800 bg-red-200 dark:text-red-100 dark:bg-red-500': (category.status|lowercase) === 'inactive'}" [matMenuTriggerFor]="statusMenu">
+
+                                <!-- Activo -->
+                                <ng-container *ngIf="(category.status|lowercase) === 'active'">
+                                    <mat-icon class="icon-size-5 text-current">check</mat-icon>
+                                    <span class="ml-2 mr-1 text-md font-medium">Activo</span>
+                                </ng-container>
+
+                                <!-- Inactivo -->
+                                <ng-container *ngIf="(category.status|lowercase) === 'inactive'">
+                                    <mat-icon class="icon-size-4 text-current">clear</mat-icon>
+                                    <span class="ml-2 mr-1 text-md font-medium">Inactivo</span>
+                                </ng-container>
+                            </div>
+                            <mat-menu #statusMenu="matMenu">
+                                <!-- Activo -->
+                                <button [ngClass]="{'bg-hover': (category.status|lowercase) === 'active'}" mat-menu-item (click)="setStatus('Active')">
+                                    <span class="inline-flex items-center justify-between w-full min-w-30 leading-5">
+                                        <span class="font-medium mr-6">Activo</span>
+                                        <mat-icon color="basic">check</mat-icon>
+                                    </span>
+                                </button>
+                                <!-- Inactivo -->
+                                <button [ngClass]="{'bg-hover': (category.status|lowercase) === 'inactive'}" mat-menu-item (click)="setStatus('Inactive')">
+                                    <span class="inline-flex items-center justify-between w-full min-w-30 leading-5">
+                                        <span class="font-medium mr-4">Inactivo</span>
+                                        <mat-icon color="warn">clear</mat-icon>
+                                    </span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent ">
+                        <!-- Delete -->
+                        <ng-container *ngIf="category.id !=''">
+                            <button mat-button color="warn" matTooltip="Eliminar">
+                                Eliminar
+                            </button>
+                        </ng-container>
+                        <!-- Cancel -->
+                        <button class="ml-auto" mat-button matTooltip="Cancelar" (click)="toggleEditMode(false)">
+                            Cancelar
+                        </button>
+                        <!-- Save -->
+                        <button class="ml-2" mat-flat-button color="primary" [disabled]="categoryForm.invalid" matTooltip="Guardar" (click)="updateCategory()">
+                            Guardar
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>

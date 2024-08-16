@@ -1,0 +1,89 @@
+<!-- side toggle start -->
+
+<div class="overflow-hidden">
+   <div class="side-info" [class.opened]="sidebarInfoActive">
+      <div class="side-info-content">
+         <div class="offset-widget offset-logo mb-[40px]">
+            <div class="grid grid-cols-12 items-center">
+               <div class="col-span-9">
+                  <a [routerLink]="['/']">
+                     <img src="assets/img/logo/emi-stream-logo.png" alt="Logo">
+                  </a>
+               </div>
+               <div class="col-span-3 text-right"><button class="side-info-close" (click)="infoclick()"><i
+                        class="fal fa-times"></i></button>
+               </div>
+            </div>
+         </div>
+
+         <app-mobilemenu></app-mobilemenu>
+         <div class="offset-widget offset_menu-top mb-[20px]">
+            <div class="header-menu-top-icon mb-[20px]">
+                <div class="flex items-center my-4">
+                    <mat-icon class="mr-3 text-blue-500">phone</mat-icon>
+                    <span>4-4521614</span>
+                </div>
+                <div class="flex items-center my-4">
+                    <mat-icon class="mr-3 text-blue-500">mail</mat-icon>
+                    <span>informacion@adm.emi.edu.bo</span>
+                </div>
+                <div class="flex items-center my-4">
+                    <mat-icon class="mr-3 text-blue-500">location_on</mat-icon>
+                    <span>Calle Lanza entre Oruro y La Paz</span>
+                </div>
+                <div class="flex items-center my-4">
+                    <mat-icon class="mr-3 text-blue-500">location_on</mat-icon>
+                    <span>Av. 23 de Marzo, Z. Muyurina</span>
+                </div>
+            </div>
+        </div>
+      </div>
+   </div>
+</div>
+
+<div class="offcanvas-overlay-white"></div>
+<!-- side toggle end -->
+
+
+<!-- header-area-start -->
+<header>
+   <div class="university-header-wrapper">
+      <!-- header-top-area end -->
+      <div class="header-main3 transpaerent-header sticky-header"
+         [ngClass]="{'mat-elevation-z5' : true, 'sticky' : isSticky}">
+         <div class="container">
+            <div class="header-main-wrapper">
+               <div class="grid grid-cols-12 gap-x-[0px] sm:gap-x-[30px] items-center">
+                  <div class="col-span-5 lg:col-span-3">
+                     <div class="header-logo">
+                        <a [routerLink]="['/']"><img class="logo-white" src="assets/img/logo/emi-stream-large.png"
+                              alt="logo"></a>
+                        <a [routerLink]="['/']"><img class="logo-black" src="assets/img/logo/emi-stream-large.png"
+                              alt="logo"></a>
+                     </div>
+                  </div>
+                  <div class="col-span-7 lg:col-span-9">
+                     <div class="header-main-right flex justify-end">
+                        <div class="main-menu mr-[30px] main-menu-lg-block">
+                           <app-mainmenu></app-mainmenu>
+                        </div>
+                        <div class="header-btn">
+                           <div class="menu-bar ml-5">
+                              <a class="side-toggle header-3" href="javascript:void(0)" (click)="infoclick()">
+                                 <div class="bar-icon header-3">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                 </div>
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</header>
+<!-- header-aea-end -->

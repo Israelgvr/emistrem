@@ -1,0 +1,68 @@
+// intructors
+@import '../../../../custom-palettes.scss';
+
+.course-detiles-meta {
+	@apply flex justify-between items-center py-[18px] px-0 flex-wrap gap-[30px] border-t border-b border-solid border-borderGray;
+}
+.course-instructors-img {
+	img {
+		@apply max-w-full;
+	}
+}
+.course-detiles-tittle {
+	h3 {
+		@apply text-[28px] font-bold mb-0;
+	}
+}
+.total-course {
+	@apply relative;
+	span {
+		@apply block mb-[-5px];
+	}
+	&:before {
+		content: "";
+		@apply absolute w-[1px] h-[42px] bg-borderGray right-[-65%] top-[5px] minMaxTablet:right-[-40%] minMaxTab:right-[-35%] minMaxTabSmall:right-[-35%] maxXs:hidden;
+	}
+}
+.student.course {
+	@apply relative;
+	label {
+		@apply text-heading text-[18px] font-bold;
+	}
+	&:before {
+		content: "";
+		@apply absolute w-[1px] h-10 bg-borderGray right-[-90%] top-[5px] minMaxTablet:right-[-65%] minMaxTab:right-[-40%] minMaxTabSmall:right-[-40%] maxXs:hidden;
+	}
+}
+.share-btn {
+	i {
+		@apply text-heading;
+	}
+}
+.student.course {
+	span {
+		@apply block mb-[-5px];
+	}
+}
+.total-course label {
+	@apply text-heading text-[18px] font-bold;
+}
+.review-course-inner {
+	ul {
+		li {
+			i {
+				@apply text-themeOrange mr-1.5 text-[13px];
+			}
+		}
+	}
+}
+.review-course-inner {
+	p {
+		@apply text-heading text-[18px] font-bold mb-0;
+	}
+}
+.course-bio-text {
+	h3 {
+		@apply text-[20px] mb-[15px];
+	}
+}

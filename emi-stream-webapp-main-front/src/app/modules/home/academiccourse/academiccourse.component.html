@@ -1,0 +1,49 @@
+<!-- academic-courses-area-start -->
+<div class="academic-courses-area relative pt-[110px] pb-[120px]">
+    <img class="academic-shape-2" src="assets/img/shape/acadenic-shape-2.png" alt="shape">
+    <div class="container">
+        <div class="section-title mb-[50px] text-center">
+            <h2>Cursos <span class="down-mark-line-2">Academicos</span></h2>
+        </div>
+        <div class="grid grid-cols-12 gap-x-[0px] sm:gap-x-[30px]">
+            <ng-container *ngIf="courses$ | async as courses">
+                <ng-container *ngIf="courses.length; else empty">
+                    <ng-container *ngFor="let course of courses;">
+                        <div class="col-span-12 md:col-span-6 xl:col-span-4">
+                            <div class="academic-box relative mb-[30px]">
+                                <img class="academic-shape" src="assets/img/shape/acadenic-shape-1.png" alt="image not found">
+                                <div class="academic-thumb">
+                                    <img class="max-h-56" src="{{course.thumbnail.videoUrl}}" alt="course-img">
+                                </div>
+                                <div class="academic-content">
+                                    <div class="academic-content-header">
+                                        <a [routerLink]="['/course-details']">
+                                            <h3>{{course.title}}</h3>
+                                        </a>
+                                    </div>
+                                    <div class="academic-body">
+                                        <div class="academic-tutor flex items-center">
+                                            <img src="assets/img/course/academic-tutor-1.png" alt="image not found">
+                                            <a [routerLink]="['/instructor-profile']">Ing. Mayte Chavarria</a>
+                                        </div>
+                                        <p>{{course.description}}</p>
+                                    </div>
+                                    <div class="academic-footer">
+                                        <div class="coursee-clock">
+                                            <i class="flaticon-wall-clock"></i><span>10/2023</span>
+                                        </div>
+                                        <a class="edo-course-sec-btn" [routerLink]="['../courses/detail', course.id]">Incribete ahora</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="academic-bottom-btn text-center">
+            <a class="edo-theme-btn mt-[30px]" [routerLink]="['../courses']">Ver todos los cursos</a>
+        </div>
+    </div>
+</div>
+<!-- academic-courses-area-end -->

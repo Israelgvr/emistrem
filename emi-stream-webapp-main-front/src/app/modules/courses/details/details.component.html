@@ -1,0 +1,292 @@
+<!-- breadcrumb -->
+<div class="hero-arera course-item-height" [style.background-image]="'url(assets/img/slider/emi-landscape.jpg)'">
+    <div class="container">
+       <div class="grid grid-cols-12">
+          <div class="col-span-12">
+             <div class="hero-course-1-text">
+                <h2>Detalles del Curso</h2>
+             </div>
+             <div class="course-title-breadcrumb">
+                <nav>
+                   <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a [routerLink]="['/']">Inicio</a></li>
+                      <li class="breadcrumb-item"><a [routerLink]="['/courses']">Cursos</a></li>
+                      <li class="breadcrumb-item"><span>{{course?.title}}</span>
+                      </li>
+                   </ol>
+                </nav>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+<!-- course-details-area-start -->
+<section class="course-detalis-area pb-[90px]">
+    <div class="container">
+        <div class="grid grid-cols-12 gap-x-[0px] sm:gap-x-[30px]">
+            <div class="col-span-12 xl:col-span-8">
+                <div class="course-detalis-wrapper mb-[30px]">
+                    <div class="course-heading mb-[20px]">
+                        <div class="grid grid-cols-9 gap-1">
+                            <h2 class="col-span-7">{{course?.title}}</h2>
+                            <button (click)="editCourse()" mat-mini-fab matTooltip="editar curso" color="basic" class="mb-4 col-span-1">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button (click)="deleteCourse()" mat-mini-fab matTooltip="eliminar curso" color="warn" class="mb-4 col-span-1">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
+                        </div>
+                        <div class="course-star">
+                            <ul>
+                                <li><i class="fas fa-star"></i></li>
+                            </ul>
+                            <ul>
+                                <li><i class="fas fa-star"></i></li>
+                            </ul>
+                            <ul>
+                                <li><i class="fas fa-star"></i></li>
+                            </ul>
+                            <ul>
+                                <li><i class="fas fa-star"></i></li>
+                            </ul>
+                            <ul>
+                                <li><i class="fal fa-star"></i></li>
+                            </ul>
+                            <span>(254 reseñas)</span>
+                        </div>
+                    </div>
+                    <div class="course-detelis-meta">
+                        <div class="course-meta-wrapper border-line-meta">
+                            <div class="course-meta-img">
+                                <a [routerLink]="['/instructor-profile']"><img src="{{course?.thumbnail.videoUrl}}"
+                                        alt="course-meta"></a>
+                            </div>
+                            <div class="course-meta-text">
+                                <span>Creado por</span>
+                                <h6><a [routerLink]="['/instructor-profile']">Mayte Chavarria</a></h6>
+                            </div>
+                        </div>
+                        <div class="course-Enroll border-line-meta">
+                            <p>Estudiantes matriculados</p>
+                            <span>5,420</span>
+                        </div>
+                        <div class="course-update border-line-meta">
+                            <p>Ultima modificacion</p>
+                            <span>01 January 2023 </span>
+                        </div>
+                        <div class="course-category">
+                            <p>01 January 2023 </p>
+                            <span><a [routerLink]="['/course']">{{course?.category}}</a></span>
+                        </div>
+                    </div>
+                    <div class="course-description pt-[45px] pb-[30px]">
+                        <div class="course-Description">
+                            <h4>Descripcion</h4>
+                        </div>
+                        <p>{{course?.description}}</p>
+                    </div>
+                    <div class="course-learn-wrapper">
+                        <div class="course-learn">
+                            <div class="course-leranm-tittle">
+                                <h4 class="mb-[15px]">Que aprenderas?</h4>
+                            </div>
+                            <div class="grid grid-cols-12 gap-x-[0px] sm:gap-x-[30px]">
+                                <div class="col-span-12 xl:col-span-12">
+                                    <div class="course-leran-text">
+                                        <ul class="grid grid-cols-2">
+                                            <ng-container *ngFor="let benefit of course?.benefits">
+                                                <li class="col-span-1">{{benefit}}</li>                                           
+                                            </ng-container>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-requirements pt-[45px]">
+                        <h4>Requerimientos para tomar el curso</h4>
+                        <div class="course-requirements-text">
+                            <ul>
+                                <ng-container *ngFor="let requirement of course?.requirements">
+                                    <li>•<span class="ml-4">{{requirement}}</span></li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="course-curriculum pt-10 pb-[50px]">
+                        <div class="course-curriculam">
+                            <h4>Temas a cursar</h4>
+                        </div>
+                        <ul>
+                            <li>{{course?.topics.length}} temas • {{course?.duration}} Durancion del curso</li>
+                        </ul>
+                        <div class="course-curriculam-accodion mt-[30px]">
+                            <div class="accordion" id="accordionExample">
+                                <ng-container *ngFor="let topic of course?.topics">
+                                    <div class="accordion-item">
+                                        <mat-accordion class="w-11/12">
+                                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        <span class="accordion-header">
+                                                            <span class="accordion-tittle">
+                                                                <span>{{(topic.name | uppercase)}}</span>
+                                                            </span>
+                                                            <span class="accordion-tittle-inner">
+                                                                <mat-icon>{{getStatusIcon(topic.status)}}</mat-icon>
+                                                            </span>
+                                                        </span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div>
+                                                    <div class="course-curriculum-content sm:flex justify-between items-center">
+                                                        <div class="course-curriculum-info">
+                                                            <i class="flaticon-youtube"></i>
+                                                            <h4>{{topic.description}}</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <button (click)="openVideoPlayerDialog(topic)" class="mx-auto flex items-center bg-blue-600 text-blue-50 hover:bg-yellow-300 rounded-lg px-4 py-2">
+                                                            <mat-icon>play_circle_filled</mat-icon>
+                                                            <span class="ml-3 text-lg">Ver video</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>             
+                                    </div> 
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <app-courseinstructor></app-courseinstructor>
+                    <app-studentfeedback></app-studentfeedback>
+                    <app-coursereview></app-coursereview>
+                    <div class="course-review-btn">
+                        <a id="show-review-box" class="edu-btn" href="javascript:void(0)" (click)=writeReview()>
+                            Escribe un comentario
+                        </a>
+
+                        <div id="review-box" class="review-comment mt-[45px]" [class.d-block]="writeReviewActive">
+                            <div class="comment-title mb-[20px]">
+                                <p>
+                                    Su dirección de correo electrónico no será publicada. Los campos obligatorios están marcados con *.
+                                </p>
+                            </div>
+                            <div class="comment-rating mb-[20px]">
+                                <span>Valoraciones generales</span>
+                                <ul>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="comment-input-box mb-[15px]">
+                                <form action="#">
+                                    <div class="grid grid-cols-12 gap-x-[0px] sm:gap-x-[30px]">
+                                        <div class="col-span-12">
+                                            <textarea placeholder="Escribe tu comentario"
+                                                class="comment-input comment-textarea mb-[20px]"></textarea>
+                                        </div>
+                                        <div class="col-span-12 xxl:col-span-6">
+                                            <div class="comment-input mb-[20px]">
+                                                <input type="text" placeholder="Ingrese su nombre">
+                                            </div>
+                                        </div>
+                                        <div class="col-span-12 xxl:col-span-6">
+                                            <div class="comment-input mb-[20px]">
+                                                <input type="email" placeholder="Ingrese su email">
+                                            </div>
+                                        </div>
+                                        <div class="col-span-12">
+                                            <div class="comment-submit">
+                                                <button type="submit" class="edu-btn">Enviar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 xl:col-span-4 md:col-span-8">
+                <div class="course-video-widget">
+                    <div class="course-widget-wrapper mb-[30px]">
+                        <div class="course-video-thumb w-img">
+                            <img src="{{course?.thumbnail.videoUrl}}" alt="image not found">
+                        </div>
+                        <div class="course-video-body">
+                            <ul>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="flaticon-filter"></i>
+                                        <span>Nivel</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{getLevelViewValue(course?.level)}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="flaticon-computer"></i>
+                                        <span>Temas</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span *ngIf="course?.topics.length > 0">{{course?.topics.length}}</span>
+                                        <span>
+                                            {{course?.topics.length | i18nPlural: { '=0' : 'sin temas', '=1' : 'tema', 'other': 'temas' } }}    
+                                        </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="flaticon-clock"></i>
+                                        <span>Duracion</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{course?.duration}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="flaticon-menu-2"></i>
+                                        <span>Categoria</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{course?.category}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <mat-icon>{{getStatusIcon(course?.courseStatus)}}</mat-icon>
+                                        <span class="ml-2">Privacidad</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{getStatusViewValue(course?.courseStatus)}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="flaticon-award"></i>
+                                        <span>Certificacion</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <mat-checkbox [checked]="course?.certification" disabled="true" class="text-xl" [color]="'primary'"></mat-checkbox>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="video-wishlist">
+                            <a class="video-cart-btn"><i class="fal fa-plus"></i>Matricularse</a>
+                            <a class="video-wishlist-btn"><i class="far fa-heart"></i>Añadir a lista</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

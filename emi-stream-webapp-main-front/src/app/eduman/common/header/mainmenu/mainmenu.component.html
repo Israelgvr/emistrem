@@ -1,0 +1,33 @@
+<nav id="mobile-menu">
+    <ul>
+        <li class="menu-item-has-children"><a [routerLink]="['/']">Inicio</a>
+            <ul class="sub-menu">
+                <li><a [routerLink]="['/']">Inicio</a></li>
+            </ul>
+        </li>
+        <li class="menu-item-has-children"><a [routerLink]="['/course']">Cursos</a>
+            <ul class="sub-menu">
+                <li><a [routerLink]="['/courses']">Cursos</a></li>
+            </ul>
+            <ul class="sub-menu">
+                <li><a [routerLink]="['/courses']">Mis cursos</a></li>
+            </ul>
+        </li>
+        <li class="menu-item-has-children"><a [routerLink]="['/manage']">Administracion</a>
+            <ul class="sub-menu">
+                <li><a [routerLink]="['/categories']">Categoria</a></li>
+            </ul>
+        </li>
+        <li class="menu-item-has-children"><a href="javascript:void(0)">Paginas</a>
+            <ul class="sub-menu">
+                <li class="menu-item-has-children"><a>instructor</a>
+                    <ul class="sub-menu">
+                        <li><a>instructor</a></li>
+                        <li><a>perfil del instructor</a></li>
+                        <li><a>perfil del estudiante</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

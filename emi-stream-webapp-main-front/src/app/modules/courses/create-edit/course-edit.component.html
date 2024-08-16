@@ -1,0 +1,262 @@
+<!-- breadcrumb -->
+<div class="hero-arera course-item-height" [style.background-image]="'url(assets/img/slider/emi-landscape.jpg)'">
+    <div class="container">
+       <div class="grid grid-cols-12">
+          <div class="col-span-12">
+             <div class="hero-course-1-text">
+                <h2>Detalles del Curso</h2>
+             </div>
+             <div class="course-title-breadcrumb">
+                <nav>
+                   <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a [routerLink]="['/']">Inicio</a></li>
+                      <li class="breadcrumb-item"><span>Crear Curso Nuevo</span>
+                      </li>
+                   </ol>
+                </nav>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+ <!-- course-details-area-start -->
+<section class="course-detalis-area pb-[90px]">
+    <div class="container">
+        <form [formGroup]="courseForm">          
+            <div class="grid grid-cols-12 gap-x-[0px] sm:gap-x-[30px]">
+                <div class="col-span-12 xl:col-span-8">
+                    <div class="course-detalis-wrapper mb-[30px]">
+                        <div class="course-heading mb-[20px]">
+                            <mat-form-field class="w-full">
+                                <mat-label>Titulo del Curso</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5">subscriptions</mat-icon>
+                                <input type="title" matInput [formControlName]="'title'"
+                                       placeholder="Ingrese el nombre del curso">
+                            </mat-form-field>
+                        </div>
+                        <div class="course-description pt-[45px] pb-[30px]">
+                            <mat-form-field class="w-full">
+                                <mat-label>Descripcion</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 ">description</mat-icon>
+                                <textarea matInput [formControlName]="'description'" 
+                                            placeholder="Ingrese la descripcion del curso" rows="4">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="course-learn-wrapper">
+                            <div class="course-learn">
+                                <div class="course-leranm-tittle flex flex-row">
+                                    <h4 class="mb-[15px] mt-2">Lo que aprenderás</h4>
+                                    <button mat-mini-fab color="primary" class="ml-8" (click)="addBenefit()">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </div>
+                                <div>
+                                    <ng-container *ngFor="let benefit of benefits.controls; let i = index; trackBy: trackByFn">
+                                        <div class="grid grid-cols-1">
+                                            <div class="col-span-1" [formGroup]="benefit">
+                                                <div class="col-span-12 xl:col-span-6">
+                                                    <div class="flex flex-row">
+                                                        <mat-form-field class="fuse-mat-no-subscript flex-auto w-full max-w-24 sm:max-w-40 ml-2 sm:ml-4">
+                                                            <mat-label>Beneficio</mat-label>
+                                                            <mat-icon matPrefix class="hidden sm:flex icon-size-5">flag</mat-icon>
+                                                            <input matInput placeholder="Ingrese el beneficio del curso" [formControl]="benefit.get('value')" [spellcheck]="false">
+                                                        </mat-form-field>
+                                                        <button (click)="removeBenefit(i)" mat-mini-fab matTooltip="Warn" color="warn" class="ml-8 mt-3">
+                                                            <mat-icon>delete_forever</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-requirements pt-[45px]">
+                            <div class="flex flex-row">
+                                <h4 class="mb-[15px] mt-2">Requerimientos</h4>
+                                <button mat-mini-fab color="primary" class="ml-8" (click)="addRequirement()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                            <ng-container *ngFor="let requirement of requirements.controls; let i = index; trackBy: trackByFn">
+                                <div class="grid grid-cols-1">
+                                    <div class="col-span-1" [formGroup]="requirement">
+                                        <div class="col-span-12 xl:col-span-6">
+                                            <div class="flex flex-row">
+                                                <mat-form-field class="fuse-mat-no-subscript flex-auto w-full max-w-24 sm:max-w-40 ml-2 sm:ml-4">
+                                                    <mat-label>Requerimiento</mat-label>
+                                                    <mat-icon matPrefix class="hidden sm:flex icon-size-5">flag</mat-icon>
+                                                    <input matInput placeholder="Ingrese el requerimiento establecido para este curso" [formControl]="requirement.get('value')" [spellcheck]="false">
+                                                </mat-form-field>
+                                                <button (click)="removeRequirement(i)" mat-mini-fab matTooltip="Warn" color="warn" class="ml-8 mt-3">
+                                                    <mat-icon>delete_forever</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="course-curriculum pt-10 pb-[50px]">
+                            <div class="flex flex-row">
+                                <h4 class="mb-[15px] mt-2">Temario</h4>
+                                <button mat-mini-fab color="primary" class="ml-8" (click)="openUploadVideoDialog()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                            <div class="course-curriculam-accodion mt-[30px]">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <ng-container *ngFor="let topic of topics.controls; let i = index; trackBy: trackByFn">
+                                            <div class="flex flex-row" [formGroup]="topic">
+                                                <mat-accordion class="w-11/12">
+                                                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                                        <mat-expansion-panel-header>
+                                                            <mat-panel-title>
+                                                                <span class="accordion-header">
+                                                                    <span class="accordion-tittle">
+                                                                        <span>{{(topic.get('name').value | uppercase)}}</span>
+                                                                    </span>
+                                                                    <span class="accordion-tittle-inner">
+                                                                        <mat-icon>{{getStatusIcon(topic.get('status').value)}}</mat-icon>
+                                                                    </span>
+                                                                </span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="accordion-body">
+                                                            <div class="course-curriculum-content sm:flex justify-between items-center">
+                                                                <div class="course-curriculum-info">
+                                                                    <i class="flaticon-youtube"></i>
+                                                                    <h4>{{topic.get('description').value}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>  
+                                                <button (click)="removeTopic(i)" mat-mini-fab matTooltip="Warn" color="warn" class="ml-8">
+                                                    <mat-icon>delete_forever</mat-icon>
+                                                </button> 
+                                            </div>
+                                        </ng-container>           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 xl:col-span-4 md:col-span-8">
+                    <div class="course-video-widget">
+                        <!-- Course Video Section -->
+                        <div class="course-widget-wrapper mb-[30px]">
+                            <div class="course-video-thumb w-img">
+                                <div class="center text-center">
+                                    <span class="font-bold text-xl">Miniatura del Curso</span>
+                                    <ng-container *ngIf="!isThumbnailUpload else thumbnailLoaded">
+                                        <ng-container *ngIf="!isThumbnailLoading">
+                                            <div class="mt-8">
+                                                <ngx-file-drop dropZoneLabel="Drop files here" accept=".jpg, .jpeg, .png" (onFileDrop)="dropped($event)">
+                                                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                                    <button type="button" (click)="openFileSelector()">arrastrar o seleccionar archivo</button>
+                                                    </ng-template>
+                                                </ngx-file-drop>
+                                                <mat-hint class="font-secondary">
+                                                    <ng-container *ngFor="let item of files; let i=index">
+                                                        <strong>{{ item.relativePath }}</strong>
+                                                    </ng-container>     
+                                                </mat-hint>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isThumbnailLoading">
+                                            <div class="mt-8 mx-auto w-20 h-20 rounded-full animate-spin border-8 border-dashed border-primary-800 border-t-blue-600"></div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-template #thumbnailLoaded>
+                                        <button (click)="removeThumbnail()" mat-mini-fab matTooltip="borrar imagen" color="warn" class="float-right mb-4">
+                                            <mat-icon>delete_forever</mat-icon>
+                                        </button>
+                                        <img src="{{thumbnailUrl}}">
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="course-video-body">
+                                <ul>
+                                    <li>
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Nivel del Curso</mat-label>
+                                            <mat-icon matPrefix class="hidden sm:flex icon-size-5">school</mat-icon>
+                                            <mat-select [formControlName]="'level'" #courseLevelSelector>
+                                                <mat-select-trigger>
+                                                    <span class="sm:mx-0.5 font-medium text-default">{{getLevelViewValue(courseLevelSelector.value)}}</span>
+                                                </mat-select-trigger>
+                                                <ng-container *ngFor="let level of levels; trackBy: trackByFn">
+                                                    <mat-option value="{{level.value}}">
+                                                        <mat-icon>{{level.icon}}</mat-icon>
+                                                        <span class="ml-2 font-medium">{{level.viewValue}}</span>
+                                                    </mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </li>
+                                    <li>
+                                        <mat-form-field class="flex-auto w-full max-w-24">
+                                            <mat-label>Duracion</mat-label>
+                                            <mat-icon matPrefix class="hidden sm:flex icon-size-5">alarm</mat-icon>
+                                            <input matInput [formControlName]="'duration'" placeholder="Ingrese el nivel del curso" [spellcheck]="false">
+                                            <mat-hint>Formato de Duracion: 00h 00m 00s</mat-hint>
+                                        </mat-form-field>
+                                    </li>
+                                    <li>
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Categoria</mat-label>
+                                            <mat-icon matPrefix class="hidden sm:flex icon-size-5">school</mat-icon>
+                                            <mat-select [formControlName]="'category'" #categorySelector>
+                                                <mat-select-trigger>
+                                                    <span class="sm:mx-0.5 font-medium text-default">{{categorySelector.value}}</span>
+                                                </mat-select-trigger>
+                                                <ng-container *ngFor="let category of categories; trackBy: trackByFn">
+                                                    <mat-option value="{{category.title}}">
+                                                        <span class="ml-2 font-medium">{{category.title}}</span>
+                                                    </mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </li>
+                                    <li>
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Privacidad del curso</mat-label>
+                                            <mat-icon matPrefix class="hidden sm:flex icon-size-5">public</mat-icon>
+                                            <mat-select [formControlName]="'courseStatus'" #courseStatusSelector>
+                                                <mat-select-trigger>
+                                                    <span class="sm:mx-0.5 font-medium text-default">{{getStatusViewValue(courseStatusSelector.value)}}</span>
+                                                </mat-select-trigger>
+                                                <ng-container *ngFor="let status of statusList; trackBy: trackByFn">
+                                                    <mat-option value="{{status.value}}">
+                                                        <mat-icon>{{status.icon}}</mat-icon>
+                                                        <span class="ml-2 font-medium">{{status.viewValue}}</span>
+                                                    </mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center">
+                                            <mat-checkbox [formControlName]="'certification'" class="text-xl" [color]="'primary'"></mat-checkbox>
+                                            <mat-label class="ml-2 mr-4 text-xl">Certificacion</mat-label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button mat-fab extended class="mx-10" [disabled]="courseForm.invalid" color="primary" (click)="saveCourse()">Guardar</button>
+                <button mat-fab extended class="mx-10" color="warn" (click)="closeEditMode()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</section>

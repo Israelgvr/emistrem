@@ -1,0 +1,73 @@
+<div mat-dialog-title>
+    <div class="grid grid-cols-3">
+        <div class="col-span-2 mt-2 flex flex-row">
+            <h4 class="font-bold">Subir video</h4>
+            <ng-container *ngIf="isUploading">
+                <div class="ml-5 mr-10 w-8 h-8 rounded-full animate-spin border-4 border-dashed border-blue-500 border-t-transparent"></div>
+            </ng-container>
+        </div>
+        <div class="col-span-1 text-right">
+            <button mat-icon-button matTooltip="Cerrar" color="warn" mat-dialog-close>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<div mat-dialog-content class="text-lg">
+    Cargar video del curso
+</div>
+<form [formGroup]="videoForm">
+    <div class="mt-4 mx-8">
+        <mat-form-field class="w-full">
+            <mat-label>Titulo del video</mat-label>
+            <mat-icon matPrefix class="hidden sm:flex icon-size-5">video_library</mat-icon>
+            <input matInput [formControlName]="'title'" placeholder="Ingrese un titulo para el video" [spellcheck]="false">
+        </mat-form-field>
+        <div class="center text-center">
+            <span class="font-bold text-xl">Video del Curso</span>
+            <ngx-file-drop dropZoneLabel="Drop files here" accept=".jpg, .jpeg, .png" (onFileDrop)="dropped($event)" 
+                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+                <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                  <button type="button" (click)="openFileSelector()">arrastrar o seleccionar archivo</button>
+                </ng-template>
+            </ngx-file-drop>
+            <mat-hint class="font-secondary">
+                <ng-container *ngFor="let item of files; let i=index">
+                    <strong>{{ item.relativePath }}</strong>
+                </ng-container>     
+            </mat-hint>
+        </div>
+        <mat-form-field class="w-full">
+            <mat-label>Descripcion del video</mat-label>
+            <mat-icon matPrefix class="hidden sm:flex icon-size-5">video_label</mat-icon>
+            <textarea matInput [formControlName]="'description'" placeholder="Ingrese la descripcion del video" [spellcheck]="false"></textarea>
+        </mat-form-field>
+        <mat-form-field class="w-1/2 ">
+            <mat-label>Privacidad del video</mat-label>
+            <mat-select [formControlName]="'videoStatus'" #videoStatusSelector>
+                <mat-select-trigger>
+                    <span class="sm:mx-0.5 font-medium text-default">{{getStatusViewValue(videoStatusSelector.value)}}</span>
+                </mat-select-trigger>
+                <ng-container *ngFor="let status of statusList; trackBy: trackByFn">
+                    <mat-option value="{{status.value}}">
+                        <mat-icon>{{status.icon}}</mat-icon>
+                        <span class="ml-2 font-medium">{{status.viewValue}}</span>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <div class="mx-auto flex flex-row">
+            <ng-container *ngIf="!isUploading">
+                <button mat-fab extended color="primary" 
+                    (click)="saveVideo()"
+                    *ngIf="!videoForm.invalid && fileUploaded">Guardar</button>
+                <button mat-fab extended color="warn" mat-dialog-close>Cancelar</button>
+            </ng-container>
+            <ng-container *ngIf="isUploading">
+                <div class="ml-5 mr-10 my-auto w-8 h-8 rounded-full animate-spin border-4 border-dashed border-blue-500 border-t-transparent"></div>
+            </ng-container>
+        </div>
+    </div>
+</form>

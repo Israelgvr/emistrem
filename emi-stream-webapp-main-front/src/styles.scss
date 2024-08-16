@@ -1,0 +1,61 @@
+/* Include the core Angular Material styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import './custom-palettes';
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
+@import '../src/assets/css/fontawesome-all.min.css';
+@import '../src/assets/css/flaticon.css';
+@import '../src/assets/scss/common.scss';
+@import '../src/assets/scss/animation.scss';
+@import '../src/assets/scss/header.scss';
+@import '../src/assets/scss/signup.scss';
+@import '../src/assets/scss/blog.scss';
+@import '../src/assets/scss/courses.scss';
+@import '../src/assets/scss/webinars.scss';
+@import '../src/assets/scss/studentProfile.scss';
+@import '../src/assets/scss/breadcrumb.scss';
+
+
+* {
+	@apply m-0 p-0 box-border;
+}
+body {
+	@apply text-[16px] font-normal leading-[26px] font-primary;
+	@apply text-bodyText;
+}
+.container {
+	@apply xxl:max-w-[1320px] xl:max-w-[1140px] lg:max-w-[960px] md:max-w-[720px] sm:max-w-[540px] maxXs:max-w-[480px] px-[15px];
+}
+a {
+	@apply no-underline;
+}
+.mat-calendar-body-cell {
+	padding-bottom: 15px !important;
+}
+.mat-input-element::placeholder {
+	@apply text-[#575757];
+}
+input.mat-input-element {
+	@apply mt-0.5;
+}
+@-moz-document url-prefix() {
+	html {
+		scroll-behavior: auto !important;
+	}
+}
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+	@apply inline-block;
+}
+label {
+	@apply cursor-pointer;
+}
